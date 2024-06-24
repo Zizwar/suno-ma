@@ -1,0 +1,112 @@
+[
+  {
+    "type": "keyboard",
+    "emo": "🎹🪗",
+    "instru": [
+      { "name": "Piano", "value": "[Piano Solo]", "emo": "🎹" },
+      { "name": "Organ", "value": "[Organ Solo]", "emo": "🎹" },
+      { "name": "Synthesizer", "value": "[Synthesizer Solo]", "emo": "🎹" },
+      { "name": "Accordion", "value": "[Accordion Solo]", "emo": "🪗" },
+      { "name": "Harpsichord", "value": "[Harpsichord Solo]", "emo": "🎹" },
+      { "name": "Melodica", "value": "[Melodica Solo]", "emo": "🎹" },
+      { "name": "Clavichord", "value": "[Clavichord Solo]", "emo": "🎹" },
+      { "name": "Harmonium", "value": "[Harmonium Solo]", "emo": "🎹" },
+      { "name": "Celesta", "value": "[Piano Solo]", "emo": "🎹" }
+    ]
+  },
+  {
+    "type": "string",
+     "emo": "🎸🎻" ,
+    "instru": [
+      { "name": "Violin", "value": "[Violin Solo]", "emo": "🎻" },
+      { "name": "Guitar", "value": "[Guitar Solo]", "emo": "🎸" },
+      { "name": "Cello", "value": "[Cello Solo]", "emo": "🎻" },
+      { "name": "Harp", "value": "[Harp Solo]", "emo": "🪕" },
+      { "name": "Ukulele", "value": "[Ukulele Solo]", "emo": "🎸" },
+      { "name": "Banjo", "value": "[Banjo Solo]", "emo": "🪕" },
+      { "name": "Mandolin", "value": "[Mandolin Solo]", "emo": "🪕" },
+      { "name": "Sitar", "value": "[Sitar Solo]", "emo": "🎸" },
+      { "name": "Lute", "value": "[Lute Solo]", "emo": "🎸" },
+      { "name": "Viola", "value": "[Viola Solo]", "emo": "🎻" },
+      { "name": "Double Bass", "value": "[Bass Solo]", "emo": "🎻" },
+      { "name": "Dulcimer", "value": "[Dulcimer Solo]", "emo": "🎸" },
+      { "name": "Koto", "value": "[Koto Solo]", "emo": "🎸" },
+      { "name": "Oud", "value": "[Oud Solo]", "emo": "🎸" },
+      { "name": "Balalaika", "value": "[Balalaika Solo]", "emo": "🎸" },
+      { "name": "Erhu", "value": "[Erhu Solo]", "emo": "🎻" },
+      { "name": "Zither", "value": "[Zither Solo]", "emo": "🎸" },
+      { "name": "Bouzouki", "value": "[Bouzouki Solo]", "emo": "🎸" },
+      { "name": "Charango", "value": "[Charango Solo]", "emo": "🎸" },
+      { "name": "Qanun", "value": "[Qanun Solo]", "emo": "🎵" },
+      { "name": "Keytar", "value": "[Keytar Solo]", "emo": "🎸" }
+    ]
+  },
+  {
+    "type": "wind",
+    "emo": "🎷🎺",
+    "instru": [
+      { "name": "Flute", "value": "[Flute Solo]", "emo": "🎵" },
+      { "name": "Clarinet", "value": "[Clarinet Solo]", "emo": "🎵" },
+      { "name": "Saxophone", "value": "[Saxophone Solo]", "emo": "🎷" },
+      { "name": "Trumpet", "value": "[Trumpet Solo]", "emo": "🎺" },
+      { "name": "Trombone", "value": "[Trombone Solo]", "emo": "🎺" },
+      { "name": "Oboe", "value": "[Oboe Solo]", "emo": "🎵" },
+      { "name": "Bassoon", "value": "[Bassoon Solo]", "emo": "🎵" },
+      { "name": "Harmonica", "value": "[Harmonica Solo]", "emo": "🎵" },
+      { "name": "Piccolo", "value": "[Piccolo Solo]", "emo": "🎵" },
+      { "name": "French Horn", "value": "[French Horn Solo]", "emo": "🎺" },
+      { "name": "Tuba", "value": "[Tuba Solo]", "emo": "🎺" },
+      { "name": "Bagpipes", "value": "[Bagpipes Solo]", "emo": "🎵" },
+      { "name": "Didgeridoo", "value": "[Didgeridoo Solo]", "emo": "🎵" },
+      { "name": "Pan Flute", "value": "[Pan Flute Solo]", "emo": "🎵" },
+      { "name": "Recorder", "value": "[Alto Recorder Solo]", "emo": "🎵" },
+      { "name": "Shakuhachi", "value": "[Shakuhachi Solo]", "emo": "🎵" },
+      { "name": "Ocarina", "value": "[Ocarina Solo]", "emo": "🎵" },
+      { "name": "Cor Anglais", "value": "[Alto Horn Solo]", "emo": "🎵" },
+      { "name": "Shofar", "value": "[Trumpet Solo]", "emo": "🎺" },
+      { "name": "Duduk", "value": "[Duduk Solo]", "emo": "🎵" }
+    ]
+  },
+  {
+    "type": "percussion",
+     "emo": "🥁🔔",
+    "instru": [
+      { "name": "Drums", "value": "[Drums Solo]", "emo": "🥁" },
+      { "name": "Xylophone", "value": "[Xylophone Solo]", "emo": "🎵" },
+      { "name": "Marimba", "value": "[Marimba Solo]", "emo": "🎵" },
+      { "name": "Tambourine", "value": "[Tambourine Solo]", "emo": "🥁" },
+      { "name": "Bongos", "value": "[Bongos Solo]", "emo": "🥁" },
+      { "name": "Congas", "value": "[Congas Solo]", "emo": "🥁" },
+      { "name": "Triangle", "value": "[Triangle Solo]", "emo": "🔔" },
+      { "name": "Cowbell", "value": "[Cowbell Solo]", "emo": "🔔" },
+      { "name": "Timpani", "value": "[Timpani Solo]", "emo": "🥁" },
+      { "name": "Gong", "value": "[Gong Solo]", "emo": "🔔" },
+      { "name": "Djembe", "value": "[Djembe Solo]", "emo": "🥁" },
+      { "name": "Castanets", "value": "[Kasik Solo]", "emo": "🔔" },
+      { "name": "Steel Drum", "value": "[Steel Drum Solo]", "emo": "🥁" },
+      { "name": "Vibraphone", "value": "[Vibraphone Solo]", "emo": "🎵" },
+      { "name": "Tabla", "value": "[Tabla Solo]", "emo": "🥁" },
+      { "name": "Cajón", "value": "[Cajón Solo]", "emo": "🥁" },
+      { "name": "Clave", "value": "[Cencerro Solo]", "emo": "🥁" },
+      { "name": "Kalimba", "value": "[Kalimba Solo]", "emo": "🎵" },
+      { "name": "Taiko", "value": "[Drums Solo]", "emo": "🥁" },
+      { "name": "Bodhran", "value": "[Bodhran Solo]", "emo": "🥁" }
+    ]
+  },
+  {
+    "type": "electronic",
+    "emo": "🎛️🎙️",
+    "instru": [
+      { "name": "Theremin", "value": "[Theremin Solo]", "emo": "🎛️" },
+      { "name": "Synthesizer", "value": "[Synthesizer Solo]", "emo": "🎛️" },
+      { "name": "Drum Machine", "value": "[Drum Circle Solo]", "emo": "🎛️" },
+      { "name": "Sampler", "value": "[Synthesizer Solo]", "emo": "🎛️" },
+      { "name": "Electric Guitar", "value": "[Guitar Solo]", "emo": "🎸" },
+      { "name": "Electric Bass", "value": "[Bass Solo]", "emo": "🎸" },
+      { "name": "Vocoder", "value": "[Synthesizer Solo]", "emo": "🎙️" },
+      { "name": "Mellotron", "value": "[Synthesizer Solo]", "emo": "🎹" },
+      { "name": "Ondes Martenot", "value": "[Synthesizer Solo]", "emo": "🎛️" },
+      { "name": "Moog Synthesizer", "value": "[Synthesizer Solo]", "emo": "🎛️" }
+    ]
+  }
+]
