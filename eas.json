@@ -14,5 +14,6 @@
   },
   "submit": {
     "production": {}
-  }
+  },
+  "image": "default"
 }
