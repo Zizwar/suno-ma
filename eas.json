@@ -1,0 +1,9 @@
+{
+  "build": {
+    "release": {
+      "android": {
+        "workflow": "managed"
+      }
+    }
+  }
+}
