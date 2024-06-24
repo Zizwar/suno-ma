@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "sunov3",
-    "slug": "snack-ee4a1d4e-775f-4909-8bdd-b72d1097459f",
+    "slug": "sunoexpo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,6 +22,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f2c2e5a3-0a49-4fe1-87b6-92b64376d369"
+      }
+    },
+    "owner": "zizwar"
   }
 }
