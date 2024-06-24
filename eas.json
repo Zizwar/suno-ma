@@ -1,9 +1,10 @@
 {
-  "build": {
-    "release": {
-      "android": {
-        "workflow": "managed"
+    "build": {
+      "production": {
+        "android": {
+          "workflow": "managed"
+        }
       }
     }
   }
-}
+  
