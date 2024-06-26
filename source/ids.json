@@ -1,0 +1,131 @@
+{
+  "songs": {
+    "id": "e6fadaa7-423b-4ad7-b1cd-c154e8066719",
+    "clips": [
+      {
+        "id": "eb5cf055-12c5-44c3-a62a-e56c5d5a9db9",
+        "video_url": "",
+        "audio_url": "",
+        "image_url": null,
+        "image_large_url": null,
+        "is_video_pending": false,
+        "major_model_version": "v3",
+        "model_name": "chirp-v3",
+        "metadata": {
+          "tags": "abc",
+          "prompt": "(start)",
+          "gpt_description_prompt": null,
+          "audio_prompt_id": "m_9607caee-464b-4fc2-aa29-5d2a889846e3",
+          "history": [
+            {
+              "id": "m_9607caee-464b-4fc2-aa29-5d2a889846e3",
+              "continue_at": 56,
+              "type": "upload",
+              "infill": false
+            }
+          ],
+          "concat_history": null,
+          "type": "gen",
+          "duration": null,
+          "refund_credits": null,
+          "stream": true,
+          "infill": false,
+          "has_vocal": true,
+          "is_audio_upload_tos_accepted": true,
+          "error_type": null,
+          "error_message": null
+        },
+        "is_liked": false,
+        "user_id": "b8200938-c304-45e7-8206-37686bca1dad",
+        "display_name": "Warez",
+        "handle": "warez",
+        "is_handle_updated": true,
+        "avatar_image_url": "https://cdn1.suno.ai/placeholder-1.png",
+        "is_trashed": false,
+        "reaction": null,
+        "created_at": "2024-06-26T01:40:52.923Z",
+        "status": "submitted",
+        "title": "abc",
+        "play_count": 0,
+        "upvote_count": 0,
+        "is_public": false
+      },
+      {
+        "id": "74014f22-d667-4e9c-a84e-1cf6690196d2",
+        "video_url": "",
+        "audio_url": "",
+        "image_url": null,
+        "image_large_url": null,
+        "is_video_pending": false,
+        "major_model_version": "v3",
+        "model_name": "chirp-v3",
+        "metadata": {
+          "tags": "abc",
+          "prompt": "(start)",
+          "gpt_description_prompt": null,
+          "audio_prompt_id": "m_9607caee-464b-4fc2-aa29-5d2a889846e3",
+          "history": [
+            {
+              "id": "m_9607caee-464b-4fc2-aa29-5d2a889846e3",
+              "continue_at": 56,
+              "type": "upload",
+              "infill": false
+            }
+          ],
+          "concat_history": null,
+          "type": "gen",
+          "duration": null,
+          "refund_credits": null,
+          "stream": true,
+          "infill": false,
+          "has_vocal": true,
+          "is_audio_upload_tos_accepted": true,
+          "error_type": null,
+          "error_message": null
+        },
+        "is_liked": false,
+        "user_id": "b8200938-c304-45e7-8206-37686bca1dad",
+        "display_name": "Warez",
+        "handle": "warez",
+        "is_handle_updated": true,
+        "avatar_image_url": "https://cdn1.suno.ai/placeholder-1.png",
+        "is_trashed": false,
+        "reaction": null,
+        "created_at": "2024-06-26T01:40:52.923Z",
+        "status": "submitted",
+        "title": "abc",
+        "play_count": 0,
+        "upvote_count": 0,
+        "is_public": false
+      }
+    ],
+    "metadata": {
+      "tags": "abc",
+      "prompt": "(start)",
+      "gpt_description_prompt": null,
+      "audio_prompt_id": "m_9607caee-464b-4fc2-aa29-5d2a889846e3",
+      "history": [
+        {
+          "id": "m_9607caee-464b-4fc2-aa29-5d2a889846e3",
+          "continue_at": 56,
+          "type": "upload",
+          "infill": false
+        }
+      ],
+      "concat_history": null,
+      "type": "gen",
+      "duration": null,
+      "refund_credits": null,
+      "stream": true,
+      "infill": false,
+      "has_vocal": true,
+      "is_audio_upload_tos_accepted": true,
+      "error_type": null,
+      "error_message": null
+    },
+    "major_model_version": "v3",
+    "status": "complete",
+    "created_at": "2024-06-26T01:40:52.914Z",
+    "batch_size": 1
+  }
+}
