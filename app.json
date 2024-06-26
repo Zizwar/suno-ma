@@ -2,7 +2,7 @@
     "expo": {
       "name": "SunoClaude",
       "slug": "sunoexpo",
-      "version": "1.0.1",
+      "version": "1.0.3",
       "orientation": "portrait",
       "icon": "./assets/icon.png",
       "userInterfaceStyle": "light",
@@ -19,7 +19,7 @@
           "foregroundImage": "./assets/adaptive-icon.png",
           "backgroundColor": "#ffffff"
         },
-        "package": "brah.im.suno.ma"
+        "package": "com.suno.ma"
       },
       "web": {
         "favicon": "./assets/favicon.png"
