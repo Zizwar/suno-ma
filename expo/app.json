@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "scheme": "https",
+    "platforms": [
+      "android"
+    ],
+    "name": "suno-ma",
+    "slug": "snack-2060f42d-74a2-4b8c-a363-eb45b0e631d1",
+    "version": "1.0.7",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.wino.suno.ma",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "suno.com"
+            },
+            {
+              "scheme": "https",
+              "host": "suno.ai"
+            },
+            {
+              "scheme": "https",
+              "host": "suno.ma"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "suno-ma"
+      }
+    }
+  }
+}
