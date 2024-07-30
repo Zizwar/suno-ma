@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,10 +9,26 @@ import SettingsScreen from './screens/SettingsScreen';
 import { linking } from './navigation/linking';
 import AudioManager from './utils/AudioManager';
 import PlayerModal from './components/PlayerModal';
+import * as Notifications from 'expo-notifications';
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
 
 export const AudioContext = React.createContext();
 
 const Stack = createStackNavigator();
+
+const BACKGROUND_AUDIO_TASK = 'BACKGROUND_AUDIO_TASK';
+
+TaskManager.defineTask(BACKGROUND_AUDIO_TASK, async () => {
+  try {
+    if (AudioManager.isPlaying) {
+      await AudioManager.playPause();
+    }
+    return BackgroundFetch.Result.NewData;
+  } catch (error) {
+    return BackgroundFetch.Result.Failed;
+  }
+});
 
 const App = () => {
   const [currentSong, setCurrentSong] = useState(null);
@@ -26,6 +41,17 @@ const App = () => {
         AudioManager.sound.unloadAsync();
       }
     };
+  }, []);
+
+  useEffect(() => {
+    const configureBackgroundFetch = async () => {
+      await BackgroundFetch.registerTaskAsync(BACKGROUND_AUDIO_TASK, {
+        minimumInterval: 15, // Interval in seconds
+        stopOnTerminate: false,
+        startOnBoot: true,
+      });
+    };
+    configureBackgroundFetch();
   }, []);
 
   const handlePlayPause = async () => {
@@ -44,7 +70,6 @@ const App = () => {
     if (status.isLoaded) {
       AudioManager.duration = status.durationMillis;
       AudioManager.position = status.positionMillis;
-      // You might want to update some state here to trigger re-renders
     }
   };
 

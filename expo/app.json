@@ -5,8 +5,8 @@
       "android"
     ],
     "name": "suno-ma",
-    "slug": "snack-2060f42d-74a2-4b8c-a363-eb45b0e631d1",
-    "version": "1.0.7",
+    "slug": "suno-music-ai",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -53,7 +53,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "suno-ma"
+        "projectId": "dda480e6-1d90-4f7f-a6dc-d2042a5dbf17"
       }
     }
   }

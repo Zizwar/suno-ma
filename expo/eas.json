@@ -9,7 +9,7 @@
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleDebug",
-          "image": "latest"
+        "image": "latest"
       }
     },
     "preview": {
@@ -17,14 +17,14 @@
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease",
-          "image": "latest"
+        "image": "latest"
       }
     },
     "production": {
       "android": {
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease",
-          "image": "latest"
+        "image": "latest"
       }
     }
   },

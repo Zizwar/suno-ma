@@ -1,5 +1,6 @@
-// utils/AudioManager.js
 import { Audio } from 'expo-av';
+import * as Notifications from 'expo-notifications';
+import * as TaskManager from 'expo-task-manager';
 
 class AudioManager {
   constructor() {
@@ -21,6 +22,8 @@ class AudioManager {
     );
     this.sound = sound;
     this.isPlaying = true;
+    this.currentSong = audioUrl;
+    this.registerBackgroundTask();
   }
 
   async playPause() {
@@ -50,6 +53,17 @@ class AudioManager {
   async setVolume(volume) {
     if (this.sound) {
       await this.sound.setVolumeAsync(volume);
+    }
+  }
+
+  async registerBackgroundTask() {
+    if (this.sound) {
+      await TaskManager.defineTask('BACKGROUND_AUDIO_TASK', async () => {
+        if (this.isPlaying) {
+          await this.sound.playAsync();
+        }
+        return BackgroundFetch.Result.NewData;
+      });
     }
   }
 }
