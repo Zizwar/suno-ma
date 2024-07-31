@@ -1,6 +1,5 @@
 // expo/utils/AudioManager.js
 import { Audio } from 'expo-av';
-import * as TaskManager from 'expo-task-manager';
 
 class AudioManager {
   constructor() {

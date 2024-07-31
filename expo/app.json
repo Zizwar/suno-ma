@@ -1,6 +1,9 @@
 {
   "expo": {
-    "scheme": ["https", "suno"],
+    "scheme": [
+      "https",
+      "suno"
+    ],
     "platforms": [
       "android"
     ],
@@ -24,7 +27,9 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": ["audio"]
+        "UIBackgroundModes": [
+          "audio"
+        ]
       }
     },
     "android": {
@@ -33,7 +38,12 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.wino.suno.ma",
-      "permissions": ["FOREGROUND_SERVICE", "WAKE_LOCK"],
+      "permissions": [
+        "FOREGROUND_SERVICE",
+        "WAKE_LOCK",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ],
       "intentFilters": [
         {
           "action": "VIEW",
@@ -73,9 +83,14 @@
       [
         "expo-av",
         {
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+          "microphonePermission": "Allow Suno MA to access your microphone."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "dda480e6-1d90-4f7f-a6dc-d2042a5dbf17"
+      }
+    }
   }
 }
