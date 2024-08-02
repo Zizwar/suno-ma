@@ -1,4 +1,4 @@
-// utils/AudioManager.js
+// expo/utils/AudioManager.js
 import { Audio } from 'expo-av';
 
 class AudioManager {
@@ -21,6 +21,8 @@ class AudioManager {
     );
     this.sound = sound;
     this.isPlaying = true;
+    this.currentSong = audioUrl;
+    await this.registerBackgroundTask();
   }
 
   async playPause() {
@@ -51,6 +53,15 @@ class AudioManager {
     if (this.sound) {
       await this.sound.setVolumeAsync(volume);
     }
+  }
+
+  async registerBackgroundTask() {
+    await Audio.setAudioModeAsync({
+      staysActiveInBackground: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      shouldDuckAndroid: true,
+      playThroughEarpieceAndroid: false,
+    });
   }
 }
 
