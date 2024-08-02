@@ -1,17 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Modal, View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { Modal, View, StyleSheet, Image, TouchableOpacity, Dimensions, PanResponder } from 'react-native';
 import { Text, Slider } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import { AudioContext } from '../App';
 import AudioManager from '../utils/AudioManager';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const PlayerModal = ({ visible, onClose }) => {
   const { currentSong, isPlaying, handlePlayPause, handleNext, handlePrevious } = useContext(AudioContext);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
+  const [repeatMode, setRepeatMode] = useState('none'); // 'none', 'one', 'all'
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,6 +23,15 @@ const PlayerModal = ({ visible, onClose }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (evt, gestureState) => {
+      if (gestureState.dy > 50) {
+        onClose();
+      }
+    },
+  });
+
   const handleSliderChange = async (value) => {
     await AudioManager.setPosition(value);
   };
@@ -31,6 +41,14 @@ const PlayerModal = ({ visible, onClose }) => {
     await AudioManager.setVolume(value);
   };
 
+  const handleRepeatModeChange = () => {
+    const modes = ['none', 'one', 'all'];
+    const currentIndex = modes.indexOf(repeatMode);
+    const nextIndex = (currentIndex + 1) % modes.length;
+    setRepeatMode(modes[nextIndex]);
+    AudioManager.setRepeatMode(modes[nextIndex]);
+  };
+
   const formatTime = (milliseconds) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
@@ -38,13 +56,24 @@ const PlayerModal = ({ visible, onClose }) => {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
+  const getRepeatIcon = () => {
+    switch (repeatMode) {
+      case 'one':
+        return 'repeat-one';
+      case 'all':
+        return 'repeat';
+      default:
+        return 'repeat-off';
+    }
+  };
+
   if (!currentSong) return null;
 
   return (
     <Modal visible={visible} animationType="slide" transparent={false}>
-      <View style={styles.container}>
+      <View style={styles.container} {...panResponder.panHandlers}>
         <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <Ionicons name="close" size={24} color="#fff" />
+          <Ionicons name="chevron-down" size={24} color="#fff" />
         </TouchableOpacity>
         <Image source={{ uri: currentSong.image_url }} style={styles.image} />
         <Text style={styles.title}>{currentSong.title.substr(0,64)}</Text>
@@ -74,18 +103,23 @@ const PlayerModal = ({ visible, onClose }) => {
             <Ionicons name="play-skip-forward" size={32} color="#fff" />
           </TouchableOpacity>
         </View>
-        <View style={styles.volumeContainer}>
-          <Ionicons name="volume-low" size={24} color="#fff" />
-          <Slider
-            value={volume}
-            onValueChange={handleVolumeChange}
-            thumbStyle={{ height: 15, width: 15 }}
-            thumbTintColor="#fff"
-            minimumTrackTintColor="#1DB954"
-            maximumTrackTintColor="#777"
-            style={styles.volumeSlider}
-          />
-          <Ionicons name="volume-high" size={24} color="#fff" />
+        <View style={styles.bottomControls}>
+          <TouchableOpacity onPress={handleRepeatModeChange}>
+            <Ionicons name={getRepeatIcon()} size={24} color="#fff" />
+          </TouchableOpacity>
+          <View style={styles.volumeContainer}>
+            <Ionicons name="volume-low" size={24} color="#fff" />
+            <Slider
+              value={volume}
+              onValueChange={handleVolumeChange}
+              thumbStyle={{ height: 15, width: 15 }}
+              thumbTintColor="#fff"
+              minimumTrackTintColor="#1DB954"
+              maximumTrackTintColor="#777"
+              style={styles.volumeSlider}
+            />
+            <Ionicons name="volume-high" size={24} color="#fff" />
+          </View>
         </View>
       </View>
     </Modal>
@@ -103,7 +137,7 @@ const styles = StyleSheet.create({
   closeButton: {
     position: 'absolute',
     top: 40,
-    right: 20,
+    left: 20,
   },
   image: {
     width: width * 0.7,
@@ -147,10 +181,17 @@ const styles = StyleSheet.create({
   playPauseButton: {
     marginHorizontal: 30,
   },
+  bottomControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   volumeContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
+    flex: 1,
+    marginLeft: 20,
   },
   volumeSlider: {
     flex: 1,

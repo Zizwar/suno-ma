@@ -1,3 +1,4 @@
+// navigation/linking.js
 export const linking = {
   prefixes: ['https://suno.com', 'https://suno.ai', 'https://suno.ma'],
   config: {

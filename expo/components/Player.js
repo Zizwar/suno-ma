@@ -1,32 +1,29 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { AudioContext } from '../App';
 
-const Player = ({ onPress }) => {
-  const { currentSong, isPlaying, handlePlayPause, handleNext, handlePrevious } = useContext(AudioContext);
-
+const Player = ({ currentSong, isPlaying, onPlayPause, onNext, onPrevious }) => {
   if (!currentSong) return null;
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.player}>
+    <View style={styles.player}>
       <Image source={{ uri: currentSong.image_url }} style={styles.playerImage} />
       <View style={styles.playerInfo}>
         <Text style={styles.playerTitle}>{currentSong.title}</Text>
         <Text style={styles.playerArtist}>{currentSong.artist}</Text>
       </View>
       <View style={styles.playerControls}>
-        <TouchableOpacity onPress={handlePrevious}>
-          <Icon name="step-backward" type="font-awesome" color="#fff" size={20} />
+        <TouchableOpacity onPress={onPrevious}>
+          <Icon name="skip-previous" type="material" color="#fff" size={24} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handlePlayPause}>
-          <Icon name={isPlaying ? "pause" : "play"} type="font-awesome" color="#fff" size={20} />
+        <TouchableOpacity onPress={onPlayPause}>
+          <Icon name={isPlaying ? "pause" : "play-arrow"} type="material" color="#fff" size={24} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleNext}>
-          <Icon name="step-forward" type="font-awesome" color="#fff" size={20} />
+        <TouchableOpacity onPress={onNext}>
+          <Icon name="skip-next" type="material" color="#fff" size={24} />
         </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
@@ -35,8 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     alignItems: 'center', 
     backgroundColor: '#222', 
-    padding: 5, 
-    height: 50 
+    padding: 10, 
+    height: 60 
   },
   playerImage: { 
     width: 40, 
@@ -57,7 +54,7 @@ const styles = StyleSheet.create({
   },
   playerControls: { 
     flexDirection: 'row', 
-    width: 100, 
+    width: 120, 
     justifyContent: 'space-between' 
   },
 });

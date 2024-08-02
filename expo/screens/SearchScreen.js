@@ -1,49 +1,115 @@
-// suno5/screens/SearchScreen.js
-import React, { useState } from 'react';
-import { View, TextInput, Button, FlatList, StyleSheet, Text } from 'react-native';
-import { searchSongs, generateLyrics } from '../utils/fetchSongs';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { View, TextInput, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { Button, Text } from 'react-native-elements';
+import { useTranslation } from 'react-i18next';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AudioContext } from '../App';
 import SongListItem from '../components/SongListItem';
+import SongDetailsModal from '../components/SongDetailsModal';
 
 const SearchScreen = ({ navigation }) => {
+  const { t } = useTranslation();
+  const { handleSongSelect } = useContext(AudioContext);
   const [query, setQuery] = useState('');
-  const [style, setStyle] = useState('');
+  const [rankBy, setRankBy] = useState('trending');
   const [searchResults, setSearchResults] = useState([]);
-  const [lyrics, setLyrics] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [detailsModalVisible, setDetailsModalVisible] = useState(false);
+  const [selectedSong, setSelectedSong] = useState(null);
 
-  const handleSearch = async () => {
+  const searchSongs = useCallback(async (resetResults = false) => {
+    if (loading || (!hasMore && !resetResults)) return;
+    
+    setLoading(true);
     try {
-      const results = await searchSongs(query, style);
-      setSearchResults(results);
+      const activeSettings = await getActiveSettings();
+      const response = await fetch(`https://suno.deno.dev/search?term=${encodeURIComponent(query)}&from_index=${resetResults ? 0 : page}&rank_by=${rankBy}`);
+      const data = await response.json();
+      
+      if (data.songs.length === 0) {
+        setHasMore(false);
+      } else {
+        setSearchResults(prevResults => resetResults ? data.songs : [...prevResults, ...data.songs]);
+        setPage(prevPage => resetResults ? 20 : prevPage + 20);
+      }
     } catch (error) {
       console.error('Error searching songs:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [query, page, rankBy, loading, hasMore]);
+
+  const handleSearch = () => {
+    setPage(0);
+    setHasMore(true);
+    searchSongs(true);
+  };
+
+  const handleLoadMore = () => {
+    if (!loading && hasMore) {
+      searchSongs();
     }
   };
 
-  const handleGenerateLyrics = async () => {
+  const handleSongPress = (song) => {
+    handleSongSelect(song);
+  };
+
+  const handleSongLongPress = (song) => {
+    setSelectedSong(song);
+    setDetailsModalVisible(true);
+  };
+
+  const renderFooter = () => {
+    if (!loading) return null;
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="small" color="#0000ff" />
+      </View>
+    );
+  };
+
+  const getActiveSettings = async () => {
     try {
-      const result = await generateLyrics(query);
-      setLyrics(result.lyrics);
+      const settings = await AsyncStorage.getItem('settings');
+      if (settings) {
+        const parsedSettings = JSON.parse(settings);
+        return parsedSettings.find(setting => setting.isActive);
+      }
     } catch (error) {
-      console.error('Error generating lyrics:', error);
+      console.error('Error getting active settings:', error);
     }
+    return null;
   };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="البحث عن الأغاني"
+        placeholder={t('searchPlaceholder')}
         value={query}
         onChangeText={setQuery}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="النمط (اختياري)"
-        value={style}
-        onChangeText={setStyle}
-      />
-      <Button title="بحث" onPress={handleSearch} />
-      <Button title="إنشاء كلمات" onPress={handleGenerateLyrics} />
+      <View style={styles.filterContainer}>
+        <Button
+          title={t('trending')}
+          onPress={() => setRankBy('trending')}
+          buttonStyle={[styles.filterButton, rankBy === 'trending' && styles.activeFilter]}
+        />
+        <Button
+          title={t('mostRelevant')}
+          onPress={() => setRankBy('most_relevant')}
+          buttonStyle={[styles.filterButton, rankBy === 'most_relevant' && styles.activeFilter]}
+        />
+        <Button
+          title={t('mostRecent')}
+          onPress={() => setRankBy('most_recent')}
+          buttonStyle={[styles.filterButton, rankBy === 'most_recent' && styles.activeFilter]}
+        />
+      </View>
+      <Button title={t('search')} onPress={handleSearch} />
       
       <FlatList
         data={searchResults}
@@ -51,17 +117,21 @@ const SearchScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <SongListItem
             song={item}
-            onPress={() => {/* Handle song selection */}}
+            onPress={() => handleSongPress(item)}
+            onLongPress={() => handleSongLongPress(item)}
           />
         )}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.1}
+        ListFooterComponent={renderFooter}
       />
 
-      {lyrics && (
-        <View style={styles.lyricsContainer}>
-          <Text style={styles.lyricsTitle}>الكلمات المنشأة:</Text>
-          <Text style={styles.lyrics}>{lyrics}</Text>
-        </View>
-      )}
+      <SongDetailsModal
+        visible={detailsModalVisible}
+        song={selectedSong}
+        onClose={() => setDetailsModalVisible(false)}
+        navigation={navigation}
+      />
     </View>
   );
 };
@@ -78,20 +148,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
   },
-  lyricsContainer: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#222',
-    borderRadius: 5,
-  },
-  lyricsTitle: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 10,
   },
-  lyrics: {
-    color: '#fff',
+  filterButton: {
+    backgroundColor: '#333',
+    paddingHorizontal: 10,
+  },
+  activeFilter: {
+    backgroundColor: '#555',
+  },
+  loaderContainer: {
+    marginVertical: 20,
   },
 });
 

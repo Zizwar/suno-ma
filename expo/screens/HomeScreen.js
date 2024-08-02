@@ -4,15 +4,18 @@ import { AudioContext } from '../App';
 import SongListItem from '../components/SongListItem';
 import SongDetailsModal from '../components/SongDetailsModal';
 import Player from '../components/Player';
+import MiniPlayer from '../components/MiniPlayer';
 import { fetchSongs } from '../utils/fetchSongs';
 
 const HomeScreen = ({ navigation }) => {
-  const { currentSong, isPlaying, handlePlayPause, handleSongSelect, setPlayerModalVisible } = useContext(AudioContext);
+  const { currentSong, isPlaying, handlePlayPause, handleSongSelect, setPlayerModalVisible,miniPlayerVisible, setMiniPlayerVisible  } = useContext(AudioContext);
   const [songs, setSongs] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [detailsModalVisible, setDetailsModalVisible] = useState(false);
   const [selectedSong, setSelectedSong] = useState(null);
 
+  
+  
   useEffect(() => {
     loadSongs();
   }, []);
@@ -70,14 +73,13 @@ const HomeScreen = ({ navigation }) => {
         navigation={navigation}
       />
 
-      {currentSong && (
-        <Player 
-          currentSong={currentSong} 
-          isPlaying={isPlaying}
-          onPlayPause={handlePlayPause}
-          onPress={() => setPlayerModalVisible(true)}
+       {miniPlayerVisible && (
+        <MiniPlayer 
+          onExpand={() => setPlayerModalVisible(true)}
+          onClose={() => setMiniPlayerVisible(false)}
         />
       )}
+      
     </View>
   );
 };

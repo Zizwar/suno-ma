@@ -1,5 +1,6 @@
-// expo/App.js
+// suno5/App.js
 import React, { useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ThemeProvider } from 'react-native-elements';
@@ -10,8 +11,11 @@ import SettingsScreen from './screens/SettingsScreen';
 import { linking } from './navigation/linking';
 import AudioManager from './utils/AudioManager';
 import PlayerModal from './components/PlayerModal';
+
+import * as Notifications from 'expo-notifications';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
+import { Audio } from 'expo-av';
 
 export const AudioContext = React.createContext();
 
@@ -30,21 +34,30 @@ TaskManager.defineTask(BACKGROUND_AUDIO_TASK, async () => {
   }
 });
 
+const MainStackScreen = () => {
+
+  return (
+    <View style={{ flex: 1 }}>
+      
+      <Stack.Navigator>
+        <Stack.Screen
+          name="MainTabs"
+          component={MainTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+      </Stack.Navigator>
+    </View>
+  );
+};
+
 const App = () => {
   const [currentSong, setCurrentSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playerModalVisible, setPlayerModalVisible] = useState(false);
+  const [miniPlayerVisible, setMiniPlayerVisible] = useState(false);
 
   useEffect(() => {
-    const configureBackgroundFetch = async () => {
-      await BackgroundFetch.registerTaskAsync(BACKGROUND_AUDIO_TASK, {
-        minimumInterval: 15, 
-        stopOnTerminate: false,
-        startOnBoot: true,
-      });
-    };
-    configureBackgroundFetch();
-
     return () => {
       if (AudioManager.sound) {
         AudioManager.sound.unloadAsync();
@@ -52,22 +65,54 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const configureBackgroundFetch = async () => {
+      await BackgroundFetch.registerTaskAsync(BACKGROUND_AUDIO_TASK, {
+        minimumInterval: 15,
+        stopOnTerminate: false,
+        startOnBoot: true,
+      });
+    };
+    configureBackgroundFetch();
+
+    Audio.setAudioModeAsync({
+      staysActiveInBackground: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+      shouldDuckAndroid: true,
+      playThroughEarpieceAndroid: false,
+      allowsRecordingIOS: false,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DUCK_OTHERS,
+      playsInSilentModeIOS: true,
+    });
+  }, []);
+
   const handlePlayPause = async () => {
     await AudioManager.playPause();
     setIsPlaying(AudioManager.isPlaying);
   };
 
+  const handleNext = async () => {
+    await AudioManager.playNext();
+    setCurrentSong(AudioManager.currentSong);
+    setIsPlaying(AudioManager.isPlaying);
+  };
+
+  const handlePrevious = async () => {
+    await AudioManager.playPrevious();
+    setCurrentSong(AudioManager.currentSong);
+    setIsPlaying(AudioManager.isPlaying);
+  };
+
   const handleSongSelect = async (song) => {
     setCurrentSong(song);
-    await AudioManager.loadAudio(song.audio_url, onPlaybackStatusUpdate);
+    await AudioManager.loadAudio(song, onPlaybackStatusUpdate);
     setIsPlaying(true);
-    setPlayerModalVisible(true);
+    setMiniPlayerVisible(true);
   };
 
   const onPlaybackStatusUpdate = (status) => {
     if (status.isLoaded) {
-      AudioManager.duration = status.durationMillis;
-      AudioManager.position = status.positionMillis;
+      setIsPlaying(status.isPlaying);
     }
   };
 
@@ -78,30 +123,30 @@ const App = () => {
           currentSong, 
           isPlaying, 
           handlePlayPause, 
+          handleNext,
+          handlePrevious,
           handleSongSelect,
-          setPlayerModalVisible 
+          setPlayerModalVisible,
+          miniPlayerVisible,
+          setMiniPlayerVisible
         }}>
           <NavigationContainer linking={linking}>
-            <Stack.Navigator>
-              <Stack.Screen
-                name="Main"
-                component={MainTabs}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen name="Settings" component={SettingsScreen} />
-            </Stack.Navigator>
+            <MainStackScreen />
           </NavigationContainer>
           <PlayerModal
             visible={playerModalVisible}
             onClose={() => setPlayerModalVisible(false)}
-            currentSong={currentSong}
-            isPlaying={isPlaying}
-            onPlayPause={handlePlayPause}
           />
         </AudioContext.Provider>
       </ThemeProvider>
     </I18nextProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;
